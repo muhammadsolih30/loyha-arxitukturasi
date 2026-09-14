@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ProjectEditor from './pages/ProjectEditor';
 import SharedProject from './pages/SharedProject';
+import Admin from './pages/Admin';
 import { useAuthStore } from './store/useAuthStore';
 import './index.css';
 
@@ -23,6 +24,7 @@ export default function AppRouter() {
       <Toaster position="top-right" />
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
         
         {/* Protected Routes */}
         <Route 

@@ -20,14 +20,14 @@ export const useAuthStore = create((set) => ({
       set({ user: null, loading: false });
     }
   },
-  signIn: async (email, password) => {
-    const { user, token } = await api.auth.login(email, password);
+  signIn: async (loginIdentifier, password) => {
+    const { user, token } = await api.auth.login(loginIdentifier, password);
     localStorage.setItem('token', token);
     set({ user });
     return user;
   },
-  signUp: async (email, password) => {
-    const { user, token } = await api.auth.register(email, password);
+  signUp: async (registrationData) => {
+    const { user, token } = await api.auth.register(registrationData);
     localStorage.setItem('token', token);
     set({ user });
     return user;

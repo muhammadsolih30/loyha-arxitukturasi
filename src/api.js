@@ -22,8 +22,9 @@ const request = async (endpoint, options = {}) => {
 
 export const api = {
   auth: {
-    register: (email, password) => request('/auth/register', { method: 'POST', body: JSON.stringify({ email, password }) }),
-    login: (email, password) => request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+    sendCode: (email) => request('/auth/send-code', { method: 'POST', body: JSON.stringify({ email }) }),
+    register: (registrationData) => request('/auth/register', { method: 'POST', body: JSON.stringify(registrationData) }),
+    login: (loginIdentifier, password) => request('/auth/login', { method: 'POST', body: JSON.stringify({ loginIdentifier, password }) }),
     me: () => request('/auth/me'),
     forgotPassword: (email) => request('/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) }),
     resetPassword: (email, code, newPassword) => request('/auth/reset-password', { method: 'POST', body: JSON.stringify({ email, code, newPassword }) }),
@@ -41,5 +42,15 @@ export const api = {
     create: (roleData) => request('/roles', { method: 'POST', body: JSON.stringify(roleData) }),
     update: (id, updates) => request(`/roles/${id}`, { method: 'PUT', body: JSON.stringify(updates) }),
     delete: (ids) => request('/roles', { method: 'DELETE', body: JSON.stringify({ ids }) }),
+  },
+  admin: {
+    login: (password) => request('/admin/login', { method: 'POST', body: JSON.stringify({ password }) }),
+    getStats: (adminKey) => request('/admin/stats', { headers: { 'x-admin-key': adminKey } }),
+    getUsers: (adminKey) => request('/admin/users', { headers: { 'x-admin-key': adminKey } }),
+    getLogs: (adminKey) => request('/admin/logs', { headers: { 'x-admin-key': adminKey } }),
+    getNotifications: (adminKey) => request('/admin/notifications', { headers: { 'x-admin-key': adminKey } }),
+    markNotificationsRead: (adminKey) => request('/admin/notifications/read', { method: 'POST', headers: { 'x-admin-key': adminKey } }),
+    deleteNotification: (adminKey, id) => request(`/admin/notifications/${id}`, { method: 'DELETE', headers: { 'x-admin-key': adminKey } }),
+    deleteUser: (adminKey, id) => request(`/admin/users/${id}`, { method: 'DELETE', headers: { 'x-admin-key': adminKey } }),
   }
 };
